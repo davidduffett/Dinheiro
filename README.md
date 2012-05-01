@@ -7,7 +7,7 @@ The aim is to cover the essentials that all ecommerce websites need.
 Note that in order to use these, you need to have relevant accounts in place with each third party.
 
 ## Ready to go
-### Dinheiro.GoogleAnalytics
+### [Dinheiro.GoogleAnalytics](https://github.com/davidduffett/Dinheiro/tree/master/Dinheiro.GoogleAnalytics)
 Allows you to easily track page views, events, social actions and ecommerce by using action filter attributes or an easy API.
 
 You can also install using [NuGet](http://nuget.org/):

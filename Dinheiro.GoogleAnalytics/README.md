@@ -30,7 +30,29 @@ In your `_Layout.cshtml` file:
 	</body>
 	</html>
 
-This will automatically output the required Google Analytics scripts to start tracking your page views.
+This will automatically output the required Google Analytics scripts to start tracking your page views:
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];_gaq.push(['_setAccount','UA-12345-6']);
+		_gaq.push(['_trackPageView']);
+		(function() {
+  		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.sync = true;
+  		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+### Ecommerce orders
+To track an ecommerce order, in your order complete action method, simply add the transaction and items in the order:
+
+	public ActionResult OrderComplete()
+	{
+		var orderId = 123456;
+		GoogleAnalytics.Current.AddTransaction(orderId, total: 18.98m, shipping: 3m);
+		GoogleAnalytics.Current.AddItem("ProductSKU1", "Product name", 12.99m, 2, orderId);
+		GoogleAnalytics.Current.AddItem("ProductSKU2", "Product name", 2.99m, 1, orderId);
+		return View();
+	}
 
 ### Tracking an event
 Use the handy action filter:
@@ -55,4 +77,30 @@ Or call the API directly:
 	{
 		GoogleAnalytics.Current.TrackEvent(category, action, label, value);
 	}
+
+### Tracking social actions
+To track social actions, such as Facebook likes, tweets and so on:
+
+	public ActionResult Like()
+	{
+		GoogleAnalytics.Current.TrackSocial("facebook", "like", "http://www.mysite.com");
+	}
 	
+### Virtual page paths
+If, instead of tracking your normal URLs, you need to track virtual page URLs, you can do so using an attribute:
+
+	[GoogleAnalyticsPage("/virtualurl")]
+	public ActionResult Index()
+	{
+		return View();
+	}
+
+Or by setting it directly:
+
+	public ActionResult Index()
+	{
+		GoogleAnalytics.Current.VirtualPageUrl = "/virtualurl";
+		return View();
+	}
+	
+Note that this is optional - pages will be tracked using their normal URL if these are omitted.

@@ -8,7 +8,7 @@
     <licenseUrl>https://github.com/davidduffett/Dinheiro/blob/master/LICENSE.txt</licenseUrl>
     <projectUrl>https://github.com/davidduffett/Dinheiro</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Google Analytics ASP.NET MVC Helper methods</description>
+    <description>Google Analytics ASP.NET MVC Helper methods for tracking ecommerce, events, social actions and page views.</description>
     <copyright>Copyright 2012</copyright>
     <tags>google analytics ecommerce tracking</tags>
   </metadata>
