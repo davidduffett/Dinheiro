@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Dinheiro.GoogleAnalytics</id>
+	<version>0.0.0</version>
+    <authors>David Duffett</authors>
+    <owners>David Duffett</owners>
+    <licenseUrl>https://github.com/davidduffett/Dinheiro/blob/master/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/davidduffett/Dinheiro</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Google Analytics ASP.NET MVC Helper methods</description>
+    <copyright>Copyright 2012</copyright>
+    <tags>google analytics ecommerce tracking</tags>
+  </metadata>
+  <files>
+	<file src="artifacts\publish\Dinheiro.GoogleAnalytics.dll" target="lib\net40" />
+  </files>
+</package>

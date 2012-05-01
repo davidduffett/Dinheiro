@@ -1,0 +1,27 @@
+﻿@using Dinheiro.GoogleAnalytics
+@{
+    ViewBag.Title = "Dinheiro.GoogleAnalytics Examples";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Dinheiro.GoogleAnalytics</h1>
+<p>ASP.NET MVC Helpers for Google Analytics</p>
+<ul>
+    <li>@Html.ActionLink("Home", "Index")</li>
+    <li>@Html.ActionLink("Virtual Page URLs", "VirtualPageUrl")</li>
+    <li>@Html.ActionLink("Track an event", "TrackEvent")</li>
+    <li>@Html.ActionLink("Track an event using query parameters", "TrackEventFromParameters", 
+                       new { 
+                               category = "Product",
+                               eventAction = "View",
+                               label = "ES123456",
+                               value = 3
+                           })</li>
+    <li>@Html.ActionLink("Track a social action", "TrackSocial")</li>
+    <li>@Html.ActionLink("Track an ecommerce order", "TrackEcommerce")</li>
+</ul>
+
+<h2>Google Analytics script output:</h2>
+<pre>
+    @GoogleAnalytics.Render().ToString()
+</pre>

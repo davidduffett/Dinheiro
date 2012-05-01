@@ -1,0 +1,14 @@
+﻿@using Dinheiro.GoogleAnalytics
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+    @GoogleAnalytics.Render()
+</head>
+
+<body>
+    @RenderBody()
+</body>
+</html>
