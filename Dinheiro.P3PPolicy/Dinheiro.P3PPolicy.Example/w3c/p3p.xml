@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<META xmlns="http://www.w3.org/2002/01/P3Pv1">
+	<POLICY-REFERENCES>
+		<EXPIRY max-age="2592000" />
+		<POLICY-REF about="#WebsitePolicy">
+			<INCLUDE>/*</INCLUDE>
+		</POLICY-REF>
+	</POLICY-REFERENCES>
+	<POLICIES xmlns="http://www.w3.org/2002/01/P3Pv1">
+		<POLICY name="WebsitePolicy" discuri="/privacy" opturi="/privacy">
+			<ENTITY>
+				<DATA-GROUP>
+					<DATA ref="#business.name"></DATA>
+					<DATA ref="#business.contact-info.postal.street"></DATA>
+					<DATA ref="#business.contact-info.postal.city"></DATA>
+					<DATA ref="#business.contact-info.postal.stateprov"></DATA>
+					<DATA ref="#business.contact-info.postal.postalcode"></DATA>
+					<DATA ref="#business.contact-info.postal.country"></DATA>
+					<DATA ref="#business.contact-info.telecom.telephone"></DATA>
+					<DATA ref="#business.contact-info.online.email"></DATA>
+				</DATA-GROUP>
+			</ENTITY>
+			<ACCESS>
+				<ident-contact/>
+			</ACCESS>
+			<DISPUTES-GROUP>
+				<DISPUTES resolution-type="service" service="/privacy">
+					<REMEDIES>
+						<correct/>
+					</REMEDIES>
+				</DISPUTES>
+			</DISPUTES-GROUP>
+			<STATEMENT>
+				<CONSEQUENCE>Collecting your information allows us to mail your order to the address you provide.</CONSEQUENCE>
+				<PURPOSE>
+					<current/>
+					<develop/>
+					<pseudo-analysis/>
+					<individual-analysis/>
+					<individual-decision/>
+					<contact required="opt-out"/>
+					<historical/>
+				</PURPOSE>
+				<RECIPIENT>
+					<ours>
+						<recipient-description>Information is only shared with our partners who share our privacy policy.</recipient-description>
+					</ours>
+					<delivery/>
+				</RECIPIENT>
+				<RETENTION>
+					<business-practices/>
+				</RETENTION>
+				<DATA-GROUP>
+					<DATA ref="#user.name"/>
+					<DATA ref="#user.home-info"/>
+					<DATA ref="#dynamic.clickstream"/>
+					<DATA ref="#dynamic.http"/>
+					<DATA ref="#dynamic.searchtext"/>
+					<DATA ref="#dynamic.interactionrecord"/>
+					<DATA ref="#dynamic.cookies">
+						<CATEGORIES>
+							<uniqueid/>
+						</CATEGORIES>
+					</DATA>
+				</DATA-GROUP>
+			</STATEMENT>
+		</POLICY>
+	</POLICIES>
+</META>

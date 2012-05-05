@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Dinheiro.P3PPolicy</id>
+	<version>0.1.0</version>
+    <authors>David Duffett</authors>
+    <owners>David Duffett</owners>
+    <licenseUrl>https://github.com/davidduffett/Dinheiro/blob/master/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/davidduffett/Dinheiro</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>ASP.NET package which adds a P3P policy to your website.</description>
+    <copyright>Copyright 2012</copyright>
+    <tags>p3p privacy policy</tags>
+  </metadata>
+  <files>
+	<file src="Dinheiro.P3PPolicy\content\web.config.transform" target="content\web.config.transform" />
+	<file src="Dinheiro.P3PPolicy\content\w3c\p3p.xml" target="content\w3c\p3p.xml" />
+	<file src="Dinheiro.P3PPolicy\tools\install.ps1" target="tools\install.ps1" />
+  </files>
+</package>
