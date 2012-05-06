@@ -25,13 +25,13 @@ Adds a P3P Policy to your website (stop Internet Explorer from blocking your coo
 The Dinheiro.Core library contains a collection of optional handy MVC helpers:
 
 #### [IFrame] and [NoIFrame] attributes
-By decorating your controller or action (or applying globally) with **`[NoIFrame]`** the page will be prevented from being embedded within `<frame>` or `<iframe>` elements.
+By decorating your controller or action (or applying globally) with `[NoIFrame]` the page will be prevented from being embedded within `<frame>` or `<iframe>` elements.
 This can help avoid **clickjacking attacks**.  It does this by adding the HTTP header `X-Frame-Options: DENY`.
 
 	[NoIFrame]
 	public class HomeController {}
 
-You can then override this to allow a page to be displayed within an `<iframe>`, but only on **your own site** by using the **`[IFrame]`** attribute.
+You can then override this to allow a page to be displayed within an `<iframe>`, but only on **your own site** by using the `[IFrame]` attribute.
 This will add the HTTP header `X-Frame-Options: SAMEORIGIN`.
 
 	[IFrame]
