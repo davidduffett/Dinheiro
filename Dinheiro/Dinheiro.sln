@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dinheiro", "Dinheiro\Dinheiro.csproj", "{C2EA969C-3E86-4AAD-8C02-880BCA7D39EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dinheiro.Specs", "Dinheiro.Specs\Dinheiro.Specs.csproj", "{A1CCCB69-DEEE-43C3-B723-83DA0D869B35}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C2EA969C-3E86-4AAD-8C02-880BCA7D39EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2EA969C-3E86-4AAD-8C02-880BCA7D39EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2EA969C-3E86-4AAD-8C02-880BCA7D39EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2EA969C-3E86-4AAD-8C02-880BCA7D39EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1CCCB69-DEEE-43C3-B723-83DA0D869B35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1CCCB69-DEEE-43C3-B723-83DA0D869B35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1CCCB69-DEEE-43C3-B723-83DA0D869B35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1CCCB69-DEEE-43C3-B723-83DA0D869B35}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
