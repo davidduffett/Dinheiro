@@ -1,4 +1,10 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  Important: Please review all data in this file and the compact policy in your web.config.
+             Ensure they match the privacy policy of your business.
+             See the W3C P3P specification: http://www.w3.org/TR/P3P/
+             Validate your P3P policy here: http://www.w3.org/P3P/validator.html
+-->
 <META xmlns="http://www.w3.org/2002/01/P3Pv1">
 	<POLICY-REFERENCES>
 		<EXPIRY max-age="2592000" />

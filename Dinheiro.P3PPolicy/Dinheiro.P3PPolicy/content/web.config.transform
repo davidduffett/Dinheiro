@@ -3,8 +3,9 @@
   <system.webServer>
     <httpProtocol>
       <customHeaders>
+        <!-- Important: ensure your compact policy matches your business privacy policy -->
         <add name="P3P" 
-             value="policyref=&quot;/w3c/p3p.xml&quot;, CP=&quot;IDC DSP COR CUR DEV PSA IVA IVD CONo HIS TELo OUR DEL UNRo BUS UNI&quot;" />
+             value="policyref=&quot;/w3c/p3p.xml&quot;, CP=&quot;IDC DSP COR CUR DEV PSA IVA IVD CONo HIS OUR DEL BUS UNI&quot;" />
       </customHeaders>
     </httpProtocol>
   </system.webServer>

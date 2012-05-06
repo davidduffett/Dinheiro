@@ -1,4 +1,10 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  Important: Please review all data in this file and the compact policy in your web.config.
+             Ensure they match the privacy policy of your business.
+             See the W3C P3P specification: http://www.w3.org/TR/P3P/
+             Validate your P3P policy here: http://www.w3.org/P3P/validator.html
+-->
 <META xmlns="http://www.w3.org/2002/01/P3Pv1">
 	<POLICY-REFERENCES>
 		<EXPIRY max-age="2592000" />
@@ -10,14 +16,14 @@
 		<POLICY name="WebsitePolicy" discuri="/privacy" opturi="/privacy">
 			<ENTITY>
 				<DATA-GROUP>
-					<DATA ref="#business.name"></DATA>
-					<DATA ref="#business.contact-info.postal.street"></DATA>
-					<DATA ref="#business.contact-info.postal.city"></DATA>
-					<DATA ref="#business.contact-info.postal.stateprov"></DATA>
-					<DATA ref="#business.contact-info.postal.postalcode"></DATA>
-					<DATA ref="#business.contact-info.postal.country"></DATA>
-					<DATA ref="#business.contact-info.telecom.telephone"></DATA>
-					<DATA ref="#business.contact-info.online.email"></DATA>
+					<DATA ref="#business.name">My Business</DATA>
+					<DATA ref="#business.contact-info.postal.street">1 Your Street</DATA>
+					<DATA ref="#business.contact-info.postal.city">Your City</DATA>
+					<DATA ref="#business.contact-info.postal.stateprov">Your State</DATA>
+					<DATA ref="#business.contact-info.postal.postalcode">Your Postcode</DATA>
+					<DATA ref="#business.contact-info.postal.country">Your Country</DATA>
+					<DATA ref="#business.contact-info.telecom.telephone">01234567890</DATA>
+					<DATA ref="#business.contact-info.online.email">privacy@example.com</DATA>
 				</DATA-GROUP>
 			</ENTITY>
 			<ACCESS>
