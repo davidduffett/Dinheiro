@@ -2,13 +2,13 @@
 <package >
   <metadata>
     <id>Dinheiro.P3PPolicy</id>
-	<version>0.1.0</version>
+	<version>1.0.0</version>
     <authors>David Duffett</authors>
     <owners>David Duffett</owners>
     <licenseUrl>https://github.com/davidduffett/Dinheiro/blob/master/LICENSE.txt</licenseUrl>
     <projectUrl>https://github.com/davidduffett/Dinheiro</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>ASP.NET package which adds a P3P policy to your website.</description>
+    <description>Adds a P3P policy to your website - stop Internet Explorer blocking your cookies! Requires IIS 7+.</description>
     <copyright>Copyright 2012</copyright>
     <tags>p3p privacy policy</tags>
   </metadata>
