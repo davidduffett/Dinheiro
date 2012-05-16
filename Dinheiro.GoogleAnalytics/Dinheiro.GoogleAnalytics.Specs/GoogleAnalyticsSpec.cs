@@ -25,7 +25,7 @@ namespace Dinheiro.GoogleAnalytics.Specs
             Output.ShouldContain("_gaq.push(['_setAccount','" + GoogleAnalytics.Account + "']);");
 
         It should_track_page_view = () =>
-            Output.ShouldContain("_gaq.push(['_trackPageView']);");
+            Output.ShouldContain("_gaq.push(['_trackPageview']);");
 
         protected static string Output;
     }
@@ -43,7 +43,7 @@ namespace Dinheiro.GoogleAnalytics.Specs
     public class When_a_virtual_page_url_has_been_set : InMemoryRenderContext
     {
         It should_track_page_view_with_forward_slash_and_that_url = () =>
-            Output.ShouldContain("_gaq.push(['_trackPageView','/landingpage']);");
+            Output.ShouldContain("_gaq.push(['_trackPageview','/landingpage']);");
 
         Establish context = () =>
             GoogleAnalytics.Current.VirtualPageUrl = "landingpage";
@@ -53,7 +53,7 @@ namespace Dinheiro.GoogleAnalytics.Specs
     public class When_a_virtual_page_url_has_been_set_with_forward_slash : InMemoryRenderContext
     {
         It should_track_page_view_with_that_url = () =>
-            Output.ShouldContain("_gaq.push(['_trackPageView','/landingpagewithslash']);");
+            Output.ShouldContain("_gaq.push(['_trackPageview','/landingpagewithslash']);");
 
         Establish context = () =>
             GoogleAnalytics.Current.VirtualPageUrl = "/landingpagewithslash";
@@ -71,7 +71,7 @@ namespace Dinheiro.GoogleAnalytics.Specs
         };
 
         It should_track_events_before_tracking_page_view = () =>
-            Output.IndexOf("'_trackEvent'").ShouldBeLessThan(Output.IndexOf("'_trackPageView'"));
+            Output.IndexOf("'_trackEvent'").ShouldBeLessThan(Output.IndexOf("'_trackPageview'"));
 
         Establish context = () =>
         {
@@ -93,7 +93,7 @@ namespace Dinheiro.GoogleAnalytics.Specs
         };
 
         It should_track_social_before_tracking_page_view = () =>
-            Output.IndexOf("'_trackSocial'").ShouldBeLessThan(Output.IndexOf("'_trackPageView'"));
+            Output.IndexOf("'_trackSocial'").ShouldBeLessThan(Output.IndexOf("'_trackPageview'"));
 
         Establish context = () =>
         {
@@ -124,10 +124,10 @@ namespace Dinheiro.GoogleAnalytics.Specs
             Output.IndexOf("'_addTrans'").ShouldBeLessThan(Output.IndexOf("'_addItem'"));
 
         It should_add_items_before_tracking_page_view = () =>
-            Output.IndexOf("'_addItem'").ShouldBeLessThan(Output.IndexOf("'_trackPageView'"));
+            Output.IndexOf("'_addItem'").ShouldBeLessThan(Output.IndexOf("'_trackPageview'"));
 
         It should_track_transaction_after_tracking_page_view = () =>
-            Output.IndexOf("'_trackTrans'").ShouldBeGreaterThan(Output.IndexOf("'_trackPageView'"));
+            Output.IndexOf("'_trackTrans'").ShouldBeGreaterThan(Output.IndexOf("'_trackPageview'"));
 
         Establish context = () =>
         {

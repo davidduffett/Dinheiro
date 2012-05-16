@@ -20,8 +20,8 @@ var _gaq = _gaq || [];
         public const string GaqPush = "_gaq.push([{0}]);";
 
         public const string SetAccount = "'_setAccount','{0}'";
-        public const string TrackPageView = "'_trackPageView'";
-        public const string TrackVirtualPageView = "'_trackPageView','/{0}'";
+        public const string TrackPageView = "'_trackPageview'";
+        public const string TrackVirtualPageView = "'_trackPageview','/{0}'";
 
         public const string AddTrans = "'_addTrans','{OrderId}','{Affiliation}','{Total:0.00}','{Tax:0.00}','{Shipping:0.00}','{City}','{State}','{Country}'";
         public const string AddItem = "'_addItem','{OrderId}','{Sku}','{Name}','{Category}','{Price:0.00}','{Quantity}'";
