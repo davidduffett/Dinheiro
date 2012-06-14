@@ -21,6 +21,12 @@ Adds a P3P Policy to your website (stop Internet Explorer from blocking your coo
   PM> Install-Package Dinheiro.P3PPolicy
 </pre>
 
+### [Dinheiro.RemoveUnnecessaryHeaders](https://github.com/davidduffett/Dinheiro/tree/master/Dinheiro.RemoveUnnecessaryHeaders)
+Removes unnecessary ASP.NET, IIS and MVC HTTP headers from your application responses.
+<pre>
+  PM> Install-Package Dinheiro.RemoveUnnecessaryHeaders
+</pre>
+
 ### Dinheiro.Core
 The Dinheiro.Core library contains a collection of optional handy MVC helpers:
 

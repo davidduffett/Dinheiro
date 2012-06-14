@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Dinheiro.RemoveUnnecessaryHeaders</id>
+	<title>Remove Unnecessary MVC Headers</title>
+    <version>1.0.0</version>
+    <authors>David Duffett</authors>
+    <owners>David Duffett</owners>
+    <licenseUrl>https://github.com/davidduffett/Dinheiro/blob/master/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/davidduffett/Dinheiro</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+		ASP.NET MVC3 package which removes the following HTTP headers from your website:
+		Server: Microsoft-IIS/7.5
+		X-Powered-By: ASP.NET
+		X-AspNet-Version: 4.x.xxxxx
+		X-AspNetMvc-Version: 3.0
+	</description>
+    <language>en-US</language>
+    <tags>mvc asp.net remove unnecessary http header</tags>
+    <dependencies>
+      <dependency id="WebActivator" version="1.4" />
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="Microsoft.Web.Infrastructure" targetFramework=".NETFramework4.0" />
+	</frameworkAssemblies>
+  </metadata>
+  <files>
+	<file src="Dinheiro.RemoveUnnecessaryHeaders\content\web.config.transform" target="content\web.config.transform"/>
+	<file src="Dinheiro.RemoveUnnecessaryHeaders\Content\App_Start\RemoveUnnecessaryHeaders.cs.pp" target="content\App_Start"/>
+	<file src="Dinheiro.RemoveUnnecessaryHeaders\tools\install.ps1" target="tools\install.ps1" />
+  </files>
+</package>
