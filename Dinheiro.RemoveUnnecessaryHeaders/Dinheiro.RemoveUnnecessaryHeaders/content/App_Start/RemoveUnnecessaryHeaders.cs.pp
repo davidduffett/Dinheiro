@@ -24,8 +24,11 @@ namespace $rootnamespace$.App_Start
         {
             context.PreSendRequestHeaders += (sender, e) =>
             {
-                if (HttpContext.Current != null)
-                    HttpContext.Current.Response.Headers.Remove("Server");
+                var app = sender as HttpApplication;
+                if (app != null && app.Context != null)
+                {
+                    app.Context.Response.Headers.Remove("Server");
+                }
             };
         }
 
