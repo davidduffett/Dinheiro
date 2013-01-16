@@ -3,7 +3,7 @@
   <metadata>
     <id>Dinheiro.RemoveUnnecessaryHeaders</id>
 	<title>Remove Unnecessary MVC Headers</title>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <authors>David Duffett</authors>
     <owners>David Duffett</owners>
     <licenseUrl>https://github.com/davidduffett/Dinheiro/blob/master/LICENSE.txt</licenseUrl>
