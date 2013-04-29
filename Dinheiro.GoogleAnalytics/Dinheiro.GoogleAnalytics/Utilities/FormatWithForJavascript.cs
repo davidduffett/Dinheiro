@@ -1,20 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
+using System.Web;
 using System.Web.UI;
 
 namespace Dinheiro.GoogleAnalytics.Utilities
 {
     /// <summary>
-    /// Enables format strings to contain property names.
+    /// Enables format strings to contain property names, and Javascript encodes strings.
     /// See http://james.newtonking.com/archive/2008/03/29/formatwith-2-0-string-formatting-with-named-variables.aspx
     /// </summary>
     /// <example>
-    /// var nameString = "My name is {Name}".FormatWith(new { Name = "David" });
+    /// var nameString = "My name is {Name}".FormatWithForJavascript(new { Name = "David" });
     /// </example>
     public static class FormatWithExtensions
     {
-        public static string FormatWith(this string format, object source, IFormatProvider provider = null)
+        public static string FormatWithForJavascript(this string format, object source, IFormatProvider provider = null)
         {
             if (string.IsNullOrWhiteSpace(format)) throw new ArgumentNullException("format");
 
@@ -37,7 +39,12 @@ namespace Dinheiro.GoogleAnalytics.Utilities
                   + new string('}', endGroup.Captures.Count);
             });
 
-            return string.Format(provider, rewrittenFormat, values.ToArray());
+            return string.Format(provider, rewrittenFormat, encodeValues(values));
+        }
+
+        static object[] encodeValues(IEnumerable<object> values)
+        {
+            return values.Select(value => value is string ? HttpUtility.JavaScriptStringEncode((string)value) : value).ToArray();
         }
     }
 }

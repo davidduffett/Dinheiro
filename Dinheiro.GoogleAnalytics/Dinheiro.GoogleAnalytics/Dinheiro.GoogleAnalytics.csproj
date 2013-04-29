@@ -42,7 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Utilities\FormatWith.cs" />
+    <Compile Include="Utilities\FormatWithForJavascript.cs" />
     <Compile Include="GoogleAnalyticsData.cs" />
     <Compile Include="GoogleAnalytics.cs" />
     <Compile Include="GoogleAnalyticsEventAttribute.cs" />

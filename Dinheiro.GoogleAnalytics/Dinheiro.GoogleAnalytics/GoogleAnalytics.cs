@@ -116,23 +116,23 @@ namespace Dinheiro.GoogleAnalytics
 
             // Events
             foreach (var gaEvent in Current.Events)
-                gaq.Push(Scripts.TrackEvent.FormatWith(gaEvent));
+                gaq.Push(Scripts.TrackEvent.FormatWithForJavascript(gaEvent));
 
             // Social
             foreach (var socialEvent in Current.SocialEvents)
                 gaq.Push(string.IsNullOrWhiteSpace(socialEvent.PagePath)
-                             ? Scripts.TrackSocial.FormatWith(socialEvent)
-                             : Scripts.TrackSocialWithPagePath.FormatWith(socialEvent));
+                             ? Scripts.TrackSocial.FormatWithForJavascript(socialEvent)
+                             : Scripts.TrackSocialWithPagePath.FormatWithForJavascript(socialEvent));
 
             // Transaction
             if (Current.Transactions.Any())
                 foreach (var trans in Current.Transactions)
-                    gaq.Push(Scripts.AddTrans.FormatWith(trans));
+                    gaq.Push(Scripts.AddTrans.FormatWithForJavascript(trans));
 
             // Items
             if (Current.Items.Any())
                 foreach (var item in Current.Items)
-                    gaq.Push(Scripts.AddItem.FormatWith(item));
+                    gaq.Push(Scripts.AddItem.FormatWithForJavascript(item));
 
             // Page view
             gaq.Push(string.IsNullOrWhiteSpace(Current.VirtualPageUrl)

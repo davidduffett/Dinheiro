@@ -136,4 +136,20 @@ namespace Dinheiro.GoogleAnalytics.Specs
             GoogleAnalytics.Current.AddItem("EE66", "Pants", 12m, 2, 1234, "Khaki");
         };
     }
+
+    [Subject(typeof(GoogleAnalytics))]
+    public class When_a_transaction_and_items_have_been_added_containing_javascript_characters : InMemoryRenderContext
+    {
+        It should_add_transaction_with_strings_encoded = () =>
+            Output.ShouldContain(@"_gaq.push(['_addTrans','1234','Womens \\n Apparel','28.28','1.29','15.00','San\\Jose','Calif\u003cornia','USA']);");
+
+        It should_add_item_with_strings_encoded = () =>
+            Output.ShouldContain(@"_gaq.push(['_addItem','1234','DD44','\u0027Shark\u0027 T-Shirt','Olive \u0026 Medium','11.99','1']);");
+
+        Establish context = () =>
+        {
+            GoogleAnalytics.Current.AddTransaction(1234, 28.28m, 1.29m, 15m, @"Womens \n Apparel", @"San\Jose", @"Calif<ornia", "USA");
+            GoogleAnalytics.Current.AddItem("DD44", @"'Shark' T-Shirt", 11.99m, 1, 1234, "Olive & Medium");
+        };
+    }
 }
