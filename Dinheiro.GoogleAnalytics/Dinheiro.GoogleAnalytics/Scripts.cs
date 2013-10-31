@@ -20,6 +20,9 @@ var _gaq = _gaq || [];
         public const string GaqPush = "_gaq.push([{0}]);";
 
         public const string SetAccount = "'_setAccount','{0}'";
+
+        public const string SetVariable = "'_set','{Name}','{Value}'";
+
         public const string TrackPageView = "'_trackPageview'";
         public const string TrackVirtualPageView = "'_trackPageview','/{0}'";
 

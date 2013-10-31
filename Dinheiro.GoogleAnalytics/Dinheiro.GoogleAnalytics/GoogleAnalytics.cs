@@ -16,6 +16,12 @@ namespace Dinheiro.GoogleAnalytics
         string VirtualPageUrl { get; set; }
 
         /// <summary>
+        /// Sets the currency of the transaction being added in this request.
+        /// </summary>
+        /// <param name="currencyCode">ISO 4217 currency code.</param>
+        void SetCurrency(string currencyCode);
+
+        /// <summary>
         /// Creates a transaction object with the given values.
         /// </summary>
         /// <param name="orderId">Internal unique order id number for this transaction.</param>
@@ -63,6 +69,7 @@ namespace Dinheiro.GoogleAnalytics
         void TrackSocial(string network, string socialAction,
                                          string target = null, string pagePath = null);
 
+        IEnumerable<GaVariable> Variables { get; } 
         IEnumerable<GaEvent> Events { get; }
         IEnumerable<GaSocialEvent> SocialEvents { get; }
         IEnumerable<GaTransaction> Transactions { get; }
@@ -114,6 +121,10 @@ namespace Dinheiro.GoogleAnalytics
 
             gaq.Push(string.Format(Scripts.SetAccount, Account));
 
+            // Variables
+            foreach (var gaVariable in Current.Variables)
+                gaq.Push(Scripts.SetVariable.FormatWithForJavascript(gaVariable));
+
             // Events
             foreach (var gaEvent in Current.Events)
                 gaq.Push(Scripts.TrackEvent.FormatWithForJavascript(gaEvent));
@@ -145,6 +156,12 @@ namespace Dinheiro.GoogleAnalytics
 
             gaq.AppendLine(Scripts.ScriptEnd);
             return new HtmlString(gaq.ToString());
+        }
+        
+        readonly IList<GaVariable> _variables = new List<GaVariable>();
+        public IEnumerable<GaVariable> Variables
+        {
+            get { return _variables; }
         }
 
         readonly IList<GaEvent> _events = new List<GaEvent>();
@@ -196,6 +213,15 @@ namespace Dinheiro.GoogleAnalytics
                                       Target = target,
                                       PagePath = pagePath
                                   });
+        }
+
+        public void SetCurrency(string currencyCode)
+        {
+            _variables.Add(new GaVariable
+                {
+                    Name = "currencyCode",
+                    Value = currencyCode
+                });
         }
 
         public void AddTransaction(object orderId, decimal total, 

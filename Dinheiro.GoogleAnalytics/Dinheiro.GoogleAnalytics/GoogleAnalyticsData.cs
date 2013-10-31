@@ -1,5 +1,11 @@
 ﻿namespace Dinheiro.GoogleAnalytics
 {
+    public class GaVariable
+    {
+        public string Name { get; set; }
+        public string Value { get; set; }
+    }
+
     public class GaEvent
     {
         public string Category { get; set; }

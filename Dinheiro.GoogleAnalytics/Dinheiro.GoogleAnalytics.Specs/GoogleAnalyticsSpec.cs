@@ -152,4 +152,24 @@ namespace Dinheiro.GoogleAnalytics.Specs
             GoogleAnalytics.Current.AddItem("DD44", @"'Shark' T-Shirt", 11.99m, 1, 1234, "Olive & Medium");
         };
     }
+
+    [Subject(typeof(GoogleAnalytics))]
+    public class When_currency_has_been_set : InMemoryRenderContext
+    {
+        Behaves_like<BasicTrackingConfigurationSet> basic_configuration_is_set;
+
+        It should_set_currency_code = () =>
+            Output.ShouldContain("_gaq.push(['_set','currencyCode','EUR']);");
+
+        It should_track_transaction_after_setting_currency_code = () =>
+            Output.IndexOf("'_trackTrans'").ShouldBeGreaterThan(Output.IndexOf("'_set','currencyCode'"));
+
+        Establish context = () =>
+        {
+            GoogleAnalytics.Current.SetCurrency("EUR");
+            GoogleAnalytics.Current.AddTransaction(1234, 28.28m, 1.29m, 15m, "Womens Apparel", "San Jose", "California", "USA");
+            GoogleAnalytics.Current.AddItem("DD44", "T-Shirt", 11.99m, 1, 1234, "Olive Medium");
+            GoogleAnalytics.Current.AddItem("EE66", "Pants", 12m, 2, 1234, "Khaki");
+        };
+    }
 }
