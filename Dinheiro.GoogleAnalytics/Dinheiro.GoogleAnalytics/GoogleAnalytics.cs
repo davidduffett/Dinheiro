@@ -16,7 +16,7 @@ namespace Dinheiro.GoogleAnalytics
         string VirtualPageUrl { get; set; }
 
         /// <summary>
-        /// Sets the currency of the transaction being added in this request.
+        /// Sets the currency of the transactions being added in this request.
         /// </summary>
         /// <param name="currencyCode">ISO 4217 currency code.</param>
         void SetCurrency(string currencyCode);
@@ -74,6 +74,7 @@ namespace Dinheiro.GoogleAnalytics
         IEnumerable<GaSocialEvent> SocialEvents { get; }
         IEnumerable<GaTransaction> Transactions { get; }
         IEnumerable<GaItem> Items { get; }
+        string Currency { get; }
     }
 
     public class GoogleAnalytics : IGoogleAnalytics
@@ -85,6 +86,22 @@ namespace Dinheiro.GoogleAnalytics
         /// Your Google Analytics account, or web property ID.
         /// </summary>
         public static string Account = "UA-XXXXX-X";
+
+        /// <summary>
+        /// Set to whichever type of Google Analytics your profile is setup as.
+        /// This determines how the scripts for web tracking are rendered.
+        /// </summary>
+        public static GoogleAnalyticsTrackingType TrackingType = GoogleAnalyticsTrackingType.ga_js;
+
+        static IScripts Scripts
+        {
+            get
+            {
+                return TrackingType == GoogleAnalyticsTrackingType.ga_js
+                           ? ScriptImplementations.Asynchronous
+                           : ScriptImplementations.Universal;
+            }
+        }
 
         /// <summary>
         /// GoogleAnalytics state for the current request.
@@ -117,45 +134,50 @@ namespace Dinheiro.GoogleAnalytics
         /// </summary>
         public static IHtmlString Render()
         {
-            var gaq = new StringBuilder(Scripts.ScriptStart);
+            var ga = new StringBuilder(Scripts.ScriptStart);
 
-            gaq.Push(string.Format(Scripts.SetAccount, Account));
+            ga.AppendLine(string.Format(Scripts.SetAccount, Account));
 
             // Variables
             foreach (var gaVariable in Current.Variables)
-                gaq.Push(Scripts.SetVariable.FormatWithForJavascript(gaVariable));
+                ga.AppendLine(Scripts.SetVariable.FormatWithForJavascript(gaVariable));
 
             // Events
             foreach (var gaEvent in Current.Events)
-                gaq.Push(Scripts.TrackEvent.FormatWithForJavascript(gaEvent));
+                ga.AppendLine(Scripts.TrackEvent.FormatWithForJavascript(gaEvent));
 
             // Social
             foreach (var socialEvent in Current.SocialEvents)
-                gaq.Push(string.IsNullOrWhiteSpace(socialEvent.PagePath)
-                             ? Scripts.TrackSocial.FormatWithForJavascript(socialEvent)
-                             : Scripts.TrackSocialWithPagePath.FormatWithForJavascript(socialEvent));
+                ga.AppendLine(string.IsNullOrWhiteSpace(socialEvent.PagePath)
+                    ? Scripts.TrackSocial.FormatWithForJavascript(socialEvent)
+                    : Scripts.TrackSocialWithPagePath.FormatWithForJavascript(socialEvent));
 
             // Transaction
             if (Current.Transactions.Any())
+            {
+                ga.AppendLine(Scripts.RequireEcommerce);
                 foreach (var trans in Current.Transactions)
-                    gaq.Push(Scripts.AddTrans.FormatWithForJavascript(trans));
+                    ga.AppendLine(string.IsNullOrWhiteSpace(trans.Currency)
+                        ? Scripts.AddTrans.FormatWithForJavascript(trans)
+                        : Scripts.AddTransWithCurrency.FormatWithForJavascript(trans));
 
-            // Items
-            if (Current.Items.Any())
-                foreach (var item in Current.Items)
-                    gaq.Push(Scripts.AddItem.FormatWithForJavascript(item));
+                // Items
+                if (Current.Items.Any())
+                    foreach (var item in Current.Items)
+                        ga.AppendLine(Scripts.AddItem.FormatWithForJavascript(item));
+            }
 
             // Page view
-            gaq.Push(string.IsNullOrWhiteSpace(Current.VirtualPageUrl)
-                         ? Scripts.TrackPageView
-                         : string.Format(Scripts.TrackVirtualPageView, Current.VirtualPageUrl.TrimStart('/')));
+            ga.AppendLine(string.IsNullOrWhiteSpace(Current.VirtualPageUrl)
+                ? Scripts.TrackPageView
+                : string.Format(Scripts.TrackVirtualPageView, Current.VirtualPageUrl.TrimStart('/')));
 
             // Track transaction
             if (Current.Transactions.Any())
-                gaq.Push(Scripts.TrackTrans);
+                ga.AppendLine(Scripts.TrackTrans);
 
-            gaq.AppendLine(Scripts.ScriptEnd);
-            return new HtmlString(gaq.ToString());
+            ga.AppendLine(Scripts.ScriptEnd);
+            return new HtmlString(ga.ToString());
         }
         
         readonly IList<GaVariable> _variables = new List<GaVariable>();
@@ -188,6 +210,8 @@ namespace Dinheiro.GoogleAnalytics
             get { return _transactions; }
         }
 
+        public string Currency { get; set; }
+
         public string VirtualPageUrl { get; set; }
 
         public void TrackEvent(string category, string action,
@@ -217,11 +241,9 @@ namespace Dinheiro.GoogleAnalytics
 
         public void SetCurrency(string currencyCode)
         {
-            _variables.Add(new GaVariable
-                {
-                    Name = "currencyCode",
-                    Value = currencyCode
-                });
+            Currency = currencyCode;
+            foreach (var transaction in _transactions)
+                transaction.Currency = Currency;
         }
 
         public void AddTransaction(object orderId, decimal total, 
@@ -237,7 +259,8 @@ namespace Dinheiro.GoogleAnalytics
                                       Affiliation = affiliation,
                                       City = city,
                                       State = state,
-                                      Country = country
+                                      Country = country,
+                                      Currency = Currency
                                   });
         }
 

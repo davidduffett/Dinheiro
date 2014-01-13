@@ -42,6 +42,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AsynchronousScripts.cs" />
+    <Compile Include="GoogleAnalyticsTrackingType.cs" />
+    <Compile Include="UniversalAnalyticsScripts.cs" />
     <Compile Include="Utilities\FormatWithForJavascript.cs" />
     <Compile Include="GoogleAnalyticsData.cs" />
     <Compile Include="GoogleAnalytics.cs" />

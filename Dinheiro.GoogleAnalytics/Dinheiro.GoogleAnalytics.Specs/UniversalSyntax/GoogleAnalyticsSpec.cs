@@ -2,12 +2,15 @@
 using Machine.Fakes;
 using Machine.Specifications;
 
-namespace Dinheiro.GoogleAnalytics.Specs
+namespace Dinheiro.GoogleAnalytics.Specs.UniversalSyntax
 {
     public abstract class InMemoryRenderContext : WithFakes
     {
         Establish context = () =>
+        {
+            GoogleAnalytics.TrackingType = GoogleAnalyticsTrackingType.analytics_js;
             GoogleAnalytics.StateStorage = new InMemoryStateStorage();
+        };
 
         Because of = () =>
             Output = GoogleAnalytics.Render().ToString();
@@ -22,10 +25,10 @@ namespace Dinheiro.GoogleAnalytics.Specs
     public class BasicTrackingConfigurationSet
     {
         It should_set_account = () =>
-            Output.ShouldContain("_gaq.push(['_setAccount','" + GoogleAnalytics.Account + "']);");
+            Output.ShouldContain("ga('create','" + GoogleAnalytics.Account + "','auto');");
 
         It should_track_page_view = () =>
-            Output.ShouldContain("_gaq.push(['_trackPageview']);");
+            Output.ShouldContain("ga('send','pageview');");
 
         protected static string Output;
     }
@@ -43,7 +46,7 @@ namespace Dinheiro.GoogleAnalytics.Specs
     public class When_a_virtual_page_url_has_been_set : InMemoryRenderContext
     {
         It should_track_page_view_with_forward_slash_and_that_url = () =>
-            Output.ShouldContain("_gaq.push(['_trackPageview','/landingpage']);");
+            Output.ShouldContain("ga('send','pageview','/landingpage');");
 
         Establish context = () =>
             GoogleAnalytics.Current.VirtualPageUrl = "landingpage";
@@ -53,7 +56,7 @@ namespace Dinheiro.GoogleAnalytics.Specs
     public class When_a_virtual_page_url_has_been_set_with_forward_slash : InMemoryRenderContext
     {
         It should_track_page_view_with_that_url = () =>
-            Output.ShouldContain("_gaq.push(['_trackPageview','/landingpagewithslash']);");
+            Output.ShouldContain("ga('send','pageview','/landingpagewithslash');");
 
         Establish context = () =>
             GoogleAnalytics.Current.VirtualPageUrl = "/landingpagewithslash";
@@ -66,12 +69,9 @@ namespace Dinheiro.GoogleAnalytics.Specs
 
         It should_track_events_for_each_one = () =>
         {
-            Output.ShouldContain("_gaq.push(['_trackEvent','Product','View','ES123456',]);");
-            Output.ShouldContain("_gaq.push(['_trackEvent','Basket','Add Item','ES123456',2]);");
+            Output.ShouldContain("ga('send','event','Product','View','ES123456',);");
+            Output.ShouldContain("ga('send','event','Basket','Add Item','ES123456',2);");
         };
-
-        It should_track_events_before_tracking_page_view = () =>
-            Output.IndexOf("'_trackEvent'").ShouldBeLessThan(Output.IndexOf("'_trackPageview'"));
 
         Establish context = () =>
         {
@@ -87,13 +87,10 @@ namespace Dinheiro.GoogleAnalytics.Specs
 
         It should_track_social_for_each_one = () =>
         {
-            Output.ShouldContain("_gaq.push(['_trackSocial','facebook','like','http://www.mysite.com']);");
-            Output.ShouldContain("_gaq.push(['_trackSocial','twitter','tweet','ES123456','/landingpage']);");
-            Output.ShouldContain("_gaq.push(['_trackSocial','facebook','unlike','ES123456','/landingpagewithslash']);");
+            Output.ShouldContain("ga('send','social','facebook','like','http://www.mysite.com');");
+            Output.ShouldContain("ga('send','social','twitter','tweet','ES123456',{'page':'/landingpage'});");
+            Output.ShouldContain("ga('send','social','facebook','unlike','ES123456',{'page':'/landingpagewithslash'});");
         };
-
-        It should_track_social_before_tracking_page_view = () =>
-            Output.IndexOf("'_trackSocial'").ShouldBeLessThan(Output.IndexOf("'_trackPageview'"));
 
         Establish context = () =>
         {
@@ -108,30 +105,33 @@ namespace Dinheiro.GoogleAnalytics.Specs
     {
         Behaves_like<BasicTrackingConfigurationSet> basic_configuration_is_set;
 
+        It should_require_ecommerce_module = () =>
+            Output.ShouldContain("ga('require','ecommerce','ecommerce.js');");
+
         It should_add_transaction = () =>
-            Output.ShouldContain("_gaq.push(['_addTrans','1234','Womens Apparel','28.28','1.29','15.00','San Jose','California','USA']);");
+            Output.ShouldContain("ga('ecommerce:addTransaction',{'id':'1234','affiliation':'Womens Apparel','revenue':'28.28','shipping':'15.00','tax':'1.29'});");
 
         It should_add_item_for_each_one = () =>
         {
-            Output.ShouldContain("_gaq.push(['_addItem','1234','DD44','T-Shirt','Olive Medium','11.99','1']);");
-            Output.ShouldContain("_gaq.push(['_addItem','1234','EE66','Pants','Khaki','12.00','2']);");
+            Output.ShouldContain("ga('ecommerce:addItem',{'id':'1234','name':'T-Shirt','sku':'DD44','category':'Olive Medium','price':'11.99','quantity':'1'});");
+            Output.ShouldContain("ga('ecommerce:addItem',{'id':'1234','name':'Pants','sku':'EE66','category':'Khaki','price':'12.00','quantity':'2'});");
         };
 
         It should_track_transaction = () =>
-            Output.ShouldContain("_gaq.push(['_trackTrans']);");
+            Output.ShouldContain("ga('ecommerce:send');");
+
+        It should_require_ecommerce_before_adding_transactions = () =>
+            Output.IndexOf("ga('require','ecommerce'").ShouldBeLessThan(Output.IndexOf("ga('ecommerce:addTransaction'"));
 
         It should_add_transaction_before_adding_items = () =>
-            Output.IndexOf("'_addTrans'").ShouldBeLessThan(Output.IndexOf("'_addItem'"));
+            Output.IndexOf("ga('ecommerce:addTransaction'").ShouldBeLessThan(Output.IndexOf("ga('ecommerce:addItem'"));
 
-        It should_add_items_before_tracking_page_view = () =>
-            Output.IndexOf("'_addItem'").ShouldBeLessThan(Output.IndexOf("'_trackPageview'"));
-
-        It should_track_transaction_after_tracking_page_view = () =>
-            Output.IndexOf("'_trackTrans'").ShouldBeGreaterThan(Output.IndexOf("'_trackPageview'"));
+        It should_track_transaction_after_adding_items = () =>
+            Output.IndexOf("ga('ecommerce:send'").ShouldBeGreaterThan(Output.IndexOf("ga('ecommerce:addItem'"));
 
         Establish context = () =>
         {
-            GoogleAnalytics.Current.AddTransaction(1234, 28.28m, 1.29m, 15m, "Womens Apparel", "San Jose", "California", "USA");
+            GoogleAnalytics.Current.AddTransaction(1234, 28.28m, 1.29m, 15m, "Womens Apparel");
             GoogleAnalytics.Current.AddItem("DD44", "T-Shirt", 11.99m, 1, 1234, "Olive Medium");
             GoogleAnalytics.Current.AddItem("EE66", "Pants", 12m, 2, 1234, "Khaki");
         };
@@ -141,14 +141,14 @@ namespace Dinheiro.GoogleAnalytics.Specs
     public class When_a_transaction_and_items_have_been_added_containing_javascript_characters : InMemoryRenderContext
     {
         It should_add_transaction_with_strings_encoded = () =>
-            Output.ShouldContain(@"_gaq.push(['_addTrans','1234','Womens \\n Apparel','28.28','1.29','15.00','San\\Jose','Calif\u003cornia','USA']);");
+            Output.ShouldContain(@"ga('ecommerce:addTransaction',{'id':'1234','affiliation':'Womens \\n App\u003carel','revenue':'28.28','shipping':'15.00','tax':'1.29'});");
 
         It should_add_item_with_strings_encoded = () =>
-            Output.ShouldContain(@"_gaq.push(['_addItem','1234','DD44','\u0027Shark\u0027 T-Shirt','Olive \u0026 Medium','11.99','1']);");
+            Output.ShouldContain(@"ga('ecommerce:addItem',{'id':'1234','name':'\u0027Shark\u0027 T-Shirt','sku':'DD44','category':'Olive \u0026 Medium','price':'11.99','quantity':'1'});");
 
         Establish context = () =>
         {
-            GoogleAnalytics.Current.AddTransaction(1234, 28.28m, 1.29m, 15m, @"Womens \n Apparel", @"San\Jose", @"Calif<ornia", "USA");
+            GoogleAnalytics.Current.AddTransaction(1234, 28.28m, 1.29m, 15m, @"Womens \n App<arel");
             GoogleAnalytics.Current.AddItem("DD44", @"'Shark' T-Shirt", 11.99m, 1, 1234, "Olive & Medium");
         };
     }
@@ -158,16 +158,13 @@ namespace Dinheiro.GoogleAnalytics.Specs
     {
         Behaves_like<BasicTrackingConfigurationSet> basic_configuration_is_set;
 
-        It should_set_currency_code = () =>
-            Output.ShouldContain("_gaq.push(['_set','currencyCode','EUR']);");
-
-        It should_track_transaction_after_setting_currency_code = () =>
-            Output.IndexOf("'_trackTrans'").ShouldBeGreaterThan(Output.IndexOf("'_set','currencyCode'"));
+        It should_set_currency_code_when_adding_transaction = () =>
+            Output.ShouldContain("ga('ecommerce:addTransaction',{'id':'1234','affiliation':'Womens Apparel','revenue':'28.28','shipping':'15.00','tax':'1.29','currency':'EUR'});");
 
         Establish context = () =>
         {
             GoogleAnalytics.Current.SetCurrency("EUR");
-            GoogleAnalytics.Current.AddTransaction(1234, 28.28m, 1.29m, 15m, "Womens Apparel", "San Jose", "California", "USA");
+            GoogleAnalytics.Current.AddTransaction(1234, 28.28m, 1.29m, 15m, "Womens Apparel");
             GoogleAnalytics.Current.AddItem("DD44", "T-Shirt", 11.99m, 1, 1234, "Olive Medium");
             GoogleAnalytics.Current.AddItem("EE66", "Pants", 12m, 2, 1234, "Khaki");
         };
