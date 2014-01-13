@@ -49,5 +49,11 @@ namespace Dinheiro.GoogleAnalytics.Example.Controllers
             GoogleAnalytics.Current.AddItem("Product SKU", "Product name", 12.99m, 2, orderId);
             return View("~/Views/Home/Index.cshtml");
         }
+
+        public ActionResult ChangeTrackingType(GoogleAnalyticsTrackingType trackingType)
+        {
+            GoogleAnalytics.TrackingType = trackingType;
+            return RedirectToAction("Index");
+        }
     }
 }

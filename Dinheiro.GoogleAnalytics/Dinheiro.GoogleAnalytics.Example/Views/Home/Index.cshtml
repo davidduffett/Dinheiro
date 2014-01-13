@@ -5,7 +5,20 @@
 }
 
 <h1>Dinheiro.GoogleAnalytics</h1>
+
 <p>ASP.NET MVC Helpers for Google Analytics</p>
+
+@using (Html.BeginForm("ChangeTrackingType", "Home"))
+{
+    <p>
+        <select id="TrackingType" name="TrackingType">
+            <option value="@GoogleAnalyticsTrackingType.ga_js" @(GoogleAnalytics.TrackingType == GoogleAnalyticsTrackingType.ga_js ? "selected" : null)>Asynchronous</option>
+            <option value="@GoogleAnalyticsTrackingType.analytics_js" @(GoogleAnalytics.TrackingType == GoogleAnalyticsTrackingType.analytics_js ? "selected" : null)>Universal</option>
+        </select>
+        <input type="submit" value="Update"/>
+    </p>
+}
+
 <ul>
     <li>@Html.ActionLink("Home", "Index")</li>
     <li>@Html.ActionLink("Virtual Page URLs", "VirtualPageUrl")</li>
