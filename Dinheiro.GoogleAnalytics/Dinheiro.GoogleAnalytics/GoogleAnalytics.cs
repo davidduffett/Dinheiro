@@ -144,7 +144,9 @@ namespace Dinheiro.GoogleAnalytics
 
             // Events
             foreach (var gaEvent in Current.Events)
-                ga.AppendLine(Scripts.TrackEvent.FormatWithForJavascript(gaEvent));
+                ga.AppendLine(gaEvent.Value.HasValue
+                    ? Scripts.TrackEventWithValue.FormatWithForJavascript(gaEvent)
+                    : Scripts.TrackEvent.FormatWithForJavascript(gaEvent));
 
             // Social
             foreach (var socialEvent in Current.SocialEvents)

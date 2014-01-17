@@ -76,6 +76,11 @@ _gaq.push(['_set','currencyCode','{Currency}']);"; }
 
         public string TrackEvent
         {
+            get { return "_gaq.push(['_trackEvent','{Category}','{Action}','{Label}']);"; }
+        }
+
+        public string TrackEventWithValue
+        {
             get { return "_gaq.push(['_trackEvent','{Category}','{Action}','{Label}',{Value}]);"; }
         }
 
