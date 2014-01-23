@@ -68,6 +68,11 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 
         public string TrackEvent
         {
+            get { return "ga('send','event','{Category}','{Action}');"; }
+        }
+
+        public string TrackEventWithLabel
+        {
             get { return "ga('send','event','{Category}','{Action}','{Label}');"; }
         }
 

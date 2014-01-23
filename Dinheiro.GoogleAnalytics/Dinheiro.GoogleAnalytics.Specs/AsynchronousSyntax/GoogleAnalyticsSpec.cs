@@ -69,6 +69,7 @@ namespace Dinheiro.GoogleAnalytics.Specs.AsynchronousSyntax
 
         It should_track_events_for_each_one = () =>
         {
+            Output.ShouldContain("_gaq.push(['_trackEvent','Unsubscribe','Submit']);");
             Output.ShouldContain("_gaq.push(['_trackEvent','Product','View','ES123456']);");
             Output.ShouldContain("_gaq.push(['_trackEvent','Basket','Add Item','ES123456',2]);");
         };
@@ -78,6 +79,7 @@ namespace Dinheiro.GoogleAnalytics.Specs.AsynchronousSyntax
 
         Establish context = () =>
         {
+            GoogleAnalytics.Current.TrackEvent("Unsubscribe", "Submit");
             GoogleAnalytics.Current.TrackEvent("Product", "View", "ES123456");
             GoogleAnalytics.Current.TrackEvent("Basket", "Add Item", "ES123456", 2, true);
         };

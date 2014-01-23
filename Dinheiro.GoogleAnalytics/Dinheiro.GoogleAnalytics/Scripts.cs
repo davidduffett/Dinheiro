@@ -14,6 +14,7 @@
         string AddItem { get; }
         string TrackTrans { get; }
         string TrackEvent { get; }
+        string TrackEventWithLabel { get; }
         string TrackEventWithValue { get; }
         string TrackSocial { get; }
         string TrackSocialWithPagePath { get; }

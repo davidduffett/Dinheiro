@@ -69,12 +69,14 @@ namespace Dinheiro.GoogleAnalytics.Specs.UniversalSyntax
 
         It should_track_events_for_each_one = () =>
         {
+            Output.ShouldContain("ga('send','event','Unsubscribe','Submit');");
             Output.ShouldContain("ga('send','event','Product','View','ES123456');");
             Output.ShouldContain("ga('send','event','Basket','Add Item','ES123456',2);");
         };
 
         Establish context = () =>
         {
+            GoogleAnalytics.Current.TrackEvent("Unsubscribe", "Submit");
             GoogleAnalytics.Current.TrackEvent("Product", "View", "ES123456");
             GoogleAnalytics.Current.TrackEvent("Basket", "Add Item", "ES123456", 2, true);
         };
