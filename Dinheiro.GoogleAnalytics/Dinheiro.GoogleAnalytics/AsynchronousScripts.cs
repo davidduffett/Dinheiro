@@ -98,5 +98,10 @@ _gaq.push(['_set','currencyCode','{Currency}']);"; }
         {
             get { return "_gaq.push(['_trackSocial','{Network}','{SocialAction}','{Target}','{PagePath}']);"; }
         }
+
+        public string RequireDisplayFeatures
+        {
+            get { return string.Empty; }
+        }
     }
 }

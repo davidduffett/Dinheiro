@@ -88,6 +88,11 @@ namespace Dinheiro.GoogleAnalytics
         public static string Account = "UA-XXXXX-X";
 
         /// <summary>
+        /// Enable or disable the Display Features (https://developers.google.com/analytics/devguides/collection/analyticsjs/display-features) plugin
+        /// </summary>
+        public static bool EnableDisplayFeaturesPlugin = false;
+
+        /// <summary>
         /// Set to whichever type of Google Analytics your profile is setup as.
         /// This determines how the scripts for web tracking are rendered.
         /// </summary>
@@ -168,6 +173,10 @@ namespace Dinheiro.GoogleAnalytics
                     foreach (var item in Current.Items)
                         ga.AppendLine(Scripts.AddItem.FormatWithForJavascript(item));
             }
+
+            // Display Features Plugin
+            if (EnableDisplayFeaturesPlugin)
+                ga.AppendLine(Scripts.RequireDisplayFeatures);
 
             // Page view
             ga.AppendLine(string.IsNullOrWhiteSpace(Current.VirtualPageUrl)

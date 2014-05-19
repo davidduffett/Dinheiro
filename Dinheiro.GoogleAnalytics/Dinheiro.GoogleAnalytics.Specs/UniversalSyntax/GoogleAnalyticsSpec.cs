@@ -171,4 +171,33 @@ namespace Dinheiro.GoogleAnalytics.Specs.UniversalSyntax
             GoogleAnalytics.Current.AddItem("EE66", "Pants", 12m, 2, 1234, "Khaki");
         };
     }
+
+    public class When_display_features_plugin_is_not_enabled : InMemoryRenderContext
+    {
+        Behaves_like<BasicTrackingConfigurationSet> basic_configuration_is_set;
+
+        It should_not_load_the_display_features_plugin = () =>
+            Output.ShouldNotContain("ga('require', 'displayfeatures');");
+
+        Establish context = () =>
+            GoogleAnalytics.EnableDisplayFeaturesPlugin = false;
+    }
+
+    [Subject(typeof (GoogleAnalytics))]
+    public class When_display_features_plugin_is_enabled : InMemoryRenderContext
+    {
+        Behaves_like<BasicTrackingConfigurationSet> basic_configuration_is_set;
+
+        It should_load_the_display_features_plugin = () =>
+            Output.ShouldContain("ga('require', 'displayfeatures');");
+
+        It should_place_the_display_features_require_after_the_create_tag = () =>
+            Output.IndexOf("ga('require', 'displayfeatures');").ShouldBeGreaterThan(Output.IndexOf("ga('create'"));
+
+        It should_place_the_display_features_require_before_sending_the_pageview = () =>
+            Output.IndexOf("ga('require', 'displayfeatures');").ShouldBeLessThan(Output.IndexOf("ga('send','pageview');"));
+
+        Establish context = () =>
+            GoogleAnalytics.EnableDisplayFeaturesPlugin = true;
+    }
 }

@@ -18,6 +18,7 @@
         string TrackEventWithValue { get; }
         string TrackSocial { get; }
         string TrackSocialWithPagePath { get; }
+        string RequireDisplayFeatures { get; }
     }
 
     static class ScriptImplementations

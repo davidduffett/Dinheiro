@@ -90,5 +90,10 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
         {
             get { return "ga('send','social','{Network}','{SocialAction}','{Target}',{{'page':'{PagePath}'}});"; }
         }
+
+        public string RequireDisplayFeatures
+        {
+            get { return "ga('require', 'displayfeatures');"; }
+        }
     }
 }
