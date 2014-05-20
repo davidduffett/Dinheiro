@@ -69,12 +69,19 @@ namespace Dinheiro.GoogleAnalytics
         void TrackSocial(string network, string socialAction,
                                          string target = null, string pagePath = null);
 
+        /// <summary>
+        /// Enable the Google Analytics Display Features plugin.
+        /// See https://developers.google.com/analytics/devguides/collection/analyticsjs/display-features for more information.
+        /// </summary> 
+        void EnableDisplayFeatures();
+
         IEnumerable<GaVariable> Variables { get; } 
         IEnumerable<GaEvent> Events { get; }
         IEnumerable<GaSocialEvent> SocialEvents { get; }
         IEnumerable<GaTransaction> Transactions { get; }
         IEnumerable<GaItem> Items { get; }
         string Currency { get; }
+        bool IsDisplayFeaturesPluginEnabled { get; }
     }
 
     public class GoogleAnalytics : IGoogleAnalytics
@@ -86,11 +93,6 @@ namespace Dinheiro.GoogleAnalytics
         /// Your Google Analytics account, or web property ID.
         /// </summary>
         public static string Account = "UA-XXXXX-X";
-
-        /// <summary>
-        /// Enable or disable the Display Features (https://developers.google.com/analytics/devguides/collection/analyticsjs/display-features) plugin
-        /// </summary>
-        public static bool EnableDisplayFeaturesPlugin = false;
 
         /// <summary>
         /// Set to whichever type of Google Analytics your profile is setup as.
@@ -175,7 +177,7 @@ namespace Dinheiro.GoogleAnalytics
             }
 
             // Display Features Plugin
-            if (EnableDisplayFeaturesPlugin)
+            if (Current.IsDisplayFeaturesPluginEnabled)
                 ga.AppendLine(Scripts.RequireDisplayFeatures);
 
             // Page view
@@ -189,6 +191,12 @@ namespace Dinheiro.GoogleAnalytics
 
             ga.AppendLine(Scripts.ScriptEnd);
             return new HtmlString(ga.ToString());
+        }
+
+        bool _isDisplayFeaturesPluginEnabled;
+        public bool IsDisplayFeaturesPluginEnabled
+        {
+            get { return _isDisplayFeaturesPluginEnabled;  }
         }
         
         readonly IList<GaVariable> _variables = new List<GaVariable>();
@@ -287,6 +295,11 @@ namespace Dinheiro.GoogleAnalytics
                                OrderId = orderId,
                                Category = category
                            });
+        }
+     
+        public void EnableDisplayFeatures()
+        {
+            _isDisplayFeaturesPluginEnabled = true;
         }
     }
 }

@@ -178,9 +178,6 @@ namespace Dinheiro.GoogleAnalytics.Specs.UniversalSyntax
 
         It should_not_load_the_display_features_plugin = () =>
             Output.ShouldNotContain("ga('require', 'displayfeatures');");
-
-        Establish context = () =>
-            GoogleAnalytics.EnableDisplayFeaturesPlugin = false;
     }
 
     [Subject(typeof (GoogleAnalytics))]
@@ -198,6 +195,6 @@ namespace Dinheiro.GoogleAnalytics.Specs.UniversalSyntax
             Output.IndexOf("ga('require', 'displayfeatures');").ShouldBeLessThan(Output.IndexOf("ga('send','pageview');"));
 
         Establish context = () =>
-            GoogleAnalytics.EnableDisplayFeaturesPlugin = true;
+            GoogleAnalytics.Current.EnableDisplayFeatures();
     }
 }
