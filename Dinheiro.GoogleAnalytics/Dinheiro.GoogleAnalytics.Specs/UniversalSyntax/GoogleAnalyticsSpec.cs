@@ -181,7 +181,7 @@ namespace Dinheiro.GoogleAnalytics.Specs.UniversalSyntax
     }
 
     [Subject(typeof (GoogleAnalytics))]
-    public class When_display_features_plugin_is_enabled : InMemoryRenderContext
+    public class When_display_features_plugin_is_enabled_for_this_request : InMemoryRenderContext
     {
         Behaves_like<BasicTrackingConfigurationSet> basic_configuration_is_set;
 
@@ -196,5 +196,23 @@ namespace Dinheiro.GoogleAnalytics.Specs.UniversalSyntax
 
         Establish context = () =>
             GoogleAnalytics.Current.EnableDisplayFeatures();
+    }
+
+    [Subject(typeof(GoogleAnalytics))]
+    public class When_display_features_plugin_is_enabled_site_wide : InMemoryRenderContext
+    {
+        Behaves_like<BasicTrackingConfigurationSet> basic_configuration_is_set;
+
+        It should_load_the_display_features_plugin = () =>
+            Output.ShouldContain("ga('require', 'displayfeatures');");
+
+        It should_place_the_display_features_require_after_the_create_tag = () =>
+            Output.IndexOf("ga('require', 'displayfeatures');").ShouldBeGreaterThan(Output.IndexOf("ga('create'"));
+
+        It should_place_the_display_features_require_before_sending_the_pageview = () =>
+            Output.IndexOf("ga('require', 'displayfeatures');").ShouldBeLessThan(Output.IndexOf("ga('send','pageview');"));
+
+        Establish context = () =>
+            GoogleAnalytics.EnableDisplayFeaturesPluginSiteWide = true;
     }
 }
