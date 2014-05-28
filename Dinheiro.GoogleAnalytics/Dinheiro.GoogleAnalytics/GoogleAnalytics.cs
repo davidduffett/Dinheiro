@@ -95,6 +95,12 @@ namespace Dinheiro.GoogleAnalytics
         public static string Account = "UA-XXXXX-X";
 
         /// <summary>
+        /// Enable the display features plugin.
+        /// Note that the "Display Features" plugin can also be enabled for each request by using GoogleAnalytics.Current.EnableDisplayFeatures()
+        /// </summary>
+        public static bool EnableDisplayFeaturesPluginSiteWide = false;
+
+        /// <summary>
         /// Set to whichever type of Google Analytics your profile is setup as.
         /// This determines how the scripts for web tracking are rendered.
         /// </summary>
@@ -196,7 +202,7 @@ namespace Dinheiro.GoogleAnalytics
         bool _isDisplayFeaturesPluginEnabled;
         public bool IsDisplayFeaturesPluginEnabled
         {
-            get { return _isDisplayFeaturesPluginEnabled;  }
+            get { return _isDisplayFeaturesPluginEnabled || EnableDisplayFeaturesPluginSiteWide;  }
         }
         
         readonly IList<GaVariable> _variables = new List<GaVariable>();
