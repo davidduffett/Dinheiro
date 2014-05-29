@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project name="Dinheiro.GoogleAnalytics" default="BuildAndPackage">
-	<property name="build.number" value="2.0.3" overwrite="false" />
+	<property name="build.number" value="2.0.4" overwrite="false" />
 	<property name="application.name" value="Dinheiro.GoogleAnalytics" overwrite="false" />
 	<property name="application.description" value="ASP.NET MVC Helper Methods for Google Analytics" />
 	<include buildfile="..\tools\master.build" />

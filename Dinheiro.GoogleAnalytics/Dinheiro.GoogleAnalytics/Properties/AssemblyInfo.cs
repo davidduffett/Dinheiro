@@ -13,7 +13,7 @@
 [assembly: AssemblyTitleAttribute("Dinheiro.GoogleAnalytics")]
 [assembly: AssemblyDescriptionAttribute("ASP.NET MVC Helper Methods for Google Analytics")]
 [assembly: AssemblyCopyrightAttribute("Copyright David Duffett 2014")]
-[assembly: AssemblyVersionAttribute("2.0.3")]
-[assembly: AssemblyFileVersionAttribute("2.0.3")]
-[assembly: AssemblyInformationalVersionAttribute("2.0.3")]
+[assembly: AssemblyVersionAttribute("2.0.4")]
+[assembly: AssemblyFileVersionAttribute("2.0.4")]
+[assembly: AssemblyInformationalVersionAttribute("2.0.4")]
 
