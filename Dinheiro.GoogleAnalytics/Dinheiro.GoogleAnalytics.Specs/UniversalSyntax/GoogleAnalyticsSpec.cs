@@ -195,6 +195,6 @@ namespace Dinheiro.GoogleAnalytics.Specs.UniversalSyntax
             Output.IndexOf("ga('require', 'displayfeatures');").ShouldBeLessThan(Output.IndexOf("ga('send','pageview');"));
 
         Establish context = () =>
-            GoogleAnalytics.Current.EnableDisplayFeatures();
+            GoogleAnalytics.EnableDisplayFeatures = true;
     }
 }
