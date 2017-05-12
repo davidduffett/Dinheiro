@@ -6,6 +6,8 @@ You can also install using [NuGet](http://nuget.org/):
   PM> Install-Package Dinheiro.RemoveUnnecessaryHeaders
 </pre>
 
+To remove the Server header from all requests you must add runAllManagedModulesForAllRequests="true" to system.webServer/modules in your web.config
+
 ## What does it do?
 Removes the following HTTP headers from your application responses:
 
